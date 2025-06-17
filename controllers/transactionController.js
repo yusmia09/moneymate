@@ -8,6 +8,7 @@ function sanitizeAmount(input) {
 }
 exports.createTransaction = async (req, res) => {
     try {
+        console.log("req.body:", req.body);
         const { walletId, name, amount, type, category, date } = req.body;
 
         const wallet = await Wallet.findByPk(walletId);
