@@ -25,17 +25,6 @@ app.use('/api/profile', profileRoutes);
 const statisticRoutes = require('./routes/statistic');
 app.use('/api', statisticRoutes);
 
-sequelize.sync({ alter: true })
-    .then(() => {
-        console.log('Database synced with models');
-
-        // Nyalakan server di port yang Adel inginkan
-        const port = process.env.PORT || 5000;
-        app.listen(port, () => {
-            console.log(`Server berjalan di http://localhost:${port}`);
-        });
-    })
-    .catch(err => console.log('DB error!', err));
 
 module.exports = app;
 module.exports.handler = serverless(app);
