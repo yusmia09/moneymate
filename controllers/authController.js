@@ -4,16 +4,18 @@ const jwt = require('jsonwebtoken');
 const { where } = require("sequelize");
 
 exports.register = async (req, res) => {
-    const {name, email, password } = req.body;
+    const {name, email, password, username} = req.body;
     try {
-        const  exist = await User.findOne({where: {email} });
-        if (exist) return res.status(400).json({message: 'Email already registered'});
+        const exist = await User.findOne({ where: { email } });
+        if (exist) return res.status(400).json({ message: 'Email already registered' });
+
+        if (!username) return res.status(400).json({ message: 'Username is required' });
 
         const hashed = await bcrypt.hash(password, 10);
-        const user = await User.create({name, email, password:hashed});
-        res.status(201).json({message: 'User created', user});
+        const user = await User.create({ name, email, password: hashed, username });
+        res.status(201).json({ message: 'User created!', user });
     } catch (err) {
-        res.status(500).json({error: err.message});
+        res.status(500).json({ error: err.message });
     }
 };
 
