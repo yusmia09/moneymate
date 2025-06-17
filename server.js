@@ -14,7 +14,13 @@ app.use(express.json()); // Menghubungkan Express dengan body-JSON
 // Cek koneksi ke database sebelum starting server
 sequelize.authenticate()
   .then(() => console.log("Database connected!"))
+  .then(() => {
+    // Sinkronisasi models -> bikin table sesuai model yang Adel punya
+    return sequelize.sync();
+  })
+  .then(() => console.log("Table siap!"))
   .catch((err) => console.error("Unable to connect to db!", err));
+
 
 // Import routes
 const authRoutes = require("./routes/auth");
