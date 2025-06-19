@@ -33,4 +33,12 @@ const Transaction = sequelize.define('Transaction', {
     },
 });
 
+// 💡 Tambahkan fungsi associate untuk relasi
+Transaction.associate = (models) => {
+    Transaction.belongsTo(models.Wallet, {
+        foreignKey: 'walletId',
+        as: 'wallet',
+    });
+};
+
 module.exports = Transaction;
