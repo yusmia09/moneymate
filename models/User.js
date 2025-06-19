@@ -1,3 +1,6 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db'); // pastikan path-nya bener ya
+
 const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
@@ -34,5 +37,7 @@ const User = sequelize.define('User', {
     allowNull: true,
   },
 }, {
-  updatedAt: 'updateAt',
+  updatedAt: 'updateAt', 
 });
+
+module.exports = User;

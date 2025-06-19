@@ -45,6 +45,30 @@ exports.getTransactionsByWallet = async (req, res) => {
     }
 };
 
+exports.getTransactionsByUser = async (req, res) => {
+    try {
+        const { userId } = req.query;
+
+        if (!userId) {
+            return res.status(400).json({ message: 'userId is required' });
+        }
+
+        const transactions = await Transaction.findAll({
+            include: [{
+                model: Wallet,
+                where: { userId }, 
+                attributes: [] 
+            }],
+            order: [["date", 'DESC']]
+        });
+
+        res.json(transactions);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+
 exports.updateTransaction = async (req, res ) => {
     try {
         const id = req.params.id;
