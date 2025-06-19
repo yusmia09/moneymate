@@ -12,9 +12,17 @@ Wallet.belongsTo(User, { foreignKey: 'userId' });
 Wallet.hasMany(Transaction, { foreignKey: 'walletId', as: 'transactions' });
 Transaction.belongsTo(Wallet, { foreignKey: 'walletId', as: 'wallet' });
 
-module.exports = {
+const db = {
   sequelize,
   User,
   Wallet,
-  Transaction
+  Transaction,
 };
+
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+module.exports = db;
