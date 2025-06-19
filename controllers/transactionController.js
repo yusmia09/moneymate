@@ -56,11 +56,12 @@ exports.getTransactionsByUser = async (req, res) => {
         const transactions = await Transaction.findAll({
             include: [{
                 model: Wallet,
+                as: 'wallet',
                 where: { userId }, 
                 attributes: [] 
             }],
             order: [["date", 'DESC']]
-        });
+        }); 
 
         res.json(transactions);
     } catch (err) {
